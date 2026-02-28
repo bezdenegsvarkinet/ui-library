@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Typography } from './typography'
-import { typographySizes } from './typography-sizes'
+import { type TTypographySizes, typographySizes } from './typography-sizes'
 
 const meta = {
 	title: 'UI/Typography',
@@ -72,7 +72,7 @@ export const AllSizes: Story = {
 	render: args => (
 		<div className='flex flex-col gap-4'>
 			{Object.keys(typographySizes).map(sizeKey => (
-				<Typography key={sizeKey} {...args} size={sizeKey as keyof typeof typographySizes}>
+				<Typography key={sizeKey} {...args} size={sizeKey as TTypographySizes}>
 					Размер: {sizeKey}
 				</Typography>
 			))}

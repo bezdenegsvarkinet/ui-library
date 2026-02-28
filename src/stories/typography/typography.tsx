@@ -18,12 +18,13 @@ const typographyVariants = cva('transition-all duration-300 leading-[100%]', {
 
 type TTag = 'p' | 'span'
 
-interface IProps extends React.HTMLAttributes<HTMLParagraphElement>, VariantProps<typeof typographyVariants> {
+export interface ITypographyProps
+	extends React.HTMLAttributes<HTMLParagraphElement>, VariantProps<typeof typographyVariants> {
 	children: React.ReactNode
 	tag?: TTag
 }
 
-export const Typography: FC<IProps> = ({ children, tag = 'p', size, className, ...props }) => {
+export const Typography: FC<ITypographyProps> = ({ children, tag = 'p', size, className, ...props }) => {
 	const Tag = tag
 
 	return (

@@ -4,8 +4,8 @@ import { FC } from 'react'
 import { cva, VariantProps } from 'class-variance-authority'
 import { cn } from '../../lib/utils'
 import { Typography } from '../typography/typography'
-import { buttonSizes } from './button-sizes'
 import { buttonBgs } from './button-bgs'
+import { buttonSizes } from './button-sizes'
 
 const buttonVariants = cva('transition-all duration-300 py-2 px-4 rounded-[8px] leading-[100%]', {
 	variants: {
@@ -22,7 +22,8 @@ const buttonVariants = cva('transition-all duration-300 py-2 px-4 rounded-[8px] 
 	},
 })
 
-interface IProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
+export interface IButtonProps
+	extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
 	/** Контент кнопки (текст или иконки) */
 	children: React.ReactNode
 	/**
@@ -39,7 +40,7 @@ interface IProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantP
  * @example
  * <Button bg="primary" size="40">Нажми меня</Button>
  */
-export const Button: FC<IProps> = ({ children, bg, size, className, asChild = false, ...props }) => {
+export const Button: FC<IButtonProps> = ({ children, bg, size, className, asChild = false, ...props }) => {
 	return (
 		<button {...props} className={cn(buttonVariants({ bg, size, className }))}>
 			{asChild ? <Typography>{children}</Typography> : children}
