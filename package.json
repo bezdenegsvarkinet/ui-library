@@ -1,5 +1,5 @@
 {
-	"name": "ui-library",
+	"name": "@bezdenegsvarkinet/ui-library",
 	"private": false,
 	"version": "0.0.1",
 	"type": "module",
@@ -18,11 +18,12 @@
 		"./styles.css": "./dist/index.css"
 	},
 	"publishConfig": {
-		"access": "public"
+		"access": "public",
+		"registry": "https://registry.npmjs.org"
 	},
 	"scripts": {
 		"dev": "vite",
-		"build": "tsc -b && vite build",
+		"build": "tsc --project tsconfig.build.json && vite build",
 		"lint": "eslint .",
 		"preview": "vite preview",
 		"storybook": "storybook dev -p 6006",
@@ -31,8 +32,7 @@
 		"chromatic:ci": "chromatic --exit-zero-on-changes --project-token=${CHROMATIC_PROJECT_TOKEN}",
 		"changeset": "changeset",
 		"version-packages": "changeset version",
-		"changeset:publish": "changeset publish",
-		"prepack": "pnpm build"
+		"changeset:publish": "changeset publish"
 	},
 	"peerDependencies": {
 		"react": "^18.0.0 || ^19.0.0",

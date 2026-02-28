@@ -1,0 +1,13 @@
+# Исключаем из npm-пакета
+.storybook
+src/
+public/
+storybook-static/
+*.log
+.env*
+.idea
+.vscode
+tsconfig.app.json
+tsconfig.node.json
+vite.config.ts
+eslint.config.js
