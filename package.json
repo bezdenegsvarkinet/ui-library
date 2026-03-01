@@ -1,7 +1,7 @@
 {
 	"name": "@bezdenegsvarkinet/ui-library",
 	"private": false,
-	"version": "0.3.0",
+	"version": "0.3.1",
 	"type": "module",
 	"files": [
 		"dist"
@@ -33,7 +33,8 @@
 		"chromatic:ci": "chromatic --exit-zero-on-changes --project-token=${CHROMATIC_PROJECT_TOKEN}",
 		"changeset": "changeset",
 		"version-packages": "changeset version",
-		"changeset:publish": "changeset publish"
+		"changeset:publish": "changeset publish",
+		"prepack": "pnpm build"
 	},
 	"peerDependencies": {
 		"class-variance-authority": "^0.7.1",

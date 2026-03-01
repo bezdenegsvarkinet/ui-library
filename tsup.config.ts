@@ -1,9 +1,7 @@
 import { defineConfig } from 'tsup'
 
 export default defineConfig({
-	// ✅ Просто строка — tsup сам разрешит путь относительно cwd
 	entry: ['src/index.ts'],
-
 	format: ['esm', 'cjs'],
 	dts: {
 		resolve: true,
@@ -19,12 +17,9 @@ export default defineConfig({
 		'lucide-react',
 		'radix-ui',
 		'tailwind-merge',
-		'tw-animate-css',
-		'shadcn',
 	],
 	sourcemap: true,
 	clean: true,
 	minify: false,
 	splitting: false,
-	banner: { js: "'use client'" },
 })
