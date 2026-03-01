@@ -16,8 +16,6 @@ export default defineConfig({
 		'clsx',
 		'lucide-react',
 		'radix-ui',
-		'shadcn',
-		'tw-animate-css',
 	],
 	sourcemap: true,
 	clean: true,
