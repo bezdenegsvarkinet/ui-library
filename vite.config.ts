@@ -17,13 +17,19 @@ export default defineConfig({
 	plugins: [
 		react(),
 		dtsPlugin({
-			// Генерируем типы ТОЛЬКО для entry point
-			include: ['src/index.ts'],
-			exclude: ['src/**/*.stories.ts', 'src/**/*.stories.tsx', 'src/main.tsx', 'src/App.tsx'],
-			// Генерируем типы В ПАПКУ dist, а не src
-			outDir: resolve(__dirname, 'dist'),
+			// ✅ Ключевая настройка: собрать все типы в один файл
 			rollupTypes: true,
-			tsconfigPath: resolve(__dirname, 'tsconfig.json'),
+
+			// Явно указываем entry point
+			entryRoot: resolve(__dirname, 'src'),
+			include: [resolve(__dirname, 'src/index.ts')],
+
+			// Исключаем story-файлы из генерации типов
+			exclude: [resolve(__dirname, 'src/**/*.stories.ts'), resolve(__dirname, 'src/**/*.stories.tsx')],
+
+			// Пути для Windows
+			tsconfigPath: resolve(__dirname, 'tsconfig.build.json'),
+			outDir: resolve(__dirname, 'dist'),
 		}),
 		tailwindcss(),
 	],
