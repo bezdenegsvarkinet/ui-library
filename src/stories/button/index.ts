@@ -1,2 +1,2 @@
-export { Button } from './ui/button'
+export { Button, type IButtonProps } from './ui/button'
 // export * from './types'

@@ -1,1 +1,1 @@
-export { Typography } from './ui/typography'
+export { Typography, type ITypographyProps } from './ui/typography'
