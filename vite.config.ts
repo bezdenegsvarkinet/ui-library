@@ -28,7 +28,7 @@ export default defineConfig({
 			exclude: [resolve(__dirname, 'src/**/*.stories.ts'), resolve(__dirname, 'src/**/*.stories.tsx')],
 
 			// Пути для Windows
-			tsconfigPath: resolve(__dirname, 'tsconfig.build.json'),
+			tsconfigPath: resolve(__dirname, 'tsconfig.json'),
 			outDir: resolve(__dirname, 'dist'),
 		}),
 		tailwindcss(),
