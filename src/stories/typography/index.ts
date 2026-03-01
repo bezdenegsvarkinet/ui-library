@@ -1,2 +1,1 @@
-export { Typography } from './typography'
-export type { TTypographySizes } from './typography-sizes'
+export { Typography } from './ui/typography'

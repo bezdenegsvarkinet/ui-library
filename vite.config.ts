@@ -33,6 +33,11 @@ export default defineConfig({
 		}),
 		tailwindcss(),
 	],
+	resolve: {
+		alias: {
+			'@': resolve(__dirname, './src'),
+		},
+	},
 	build: {
 		// ВАЖНО: режим библиотеки, а не приложения
 		lib: {

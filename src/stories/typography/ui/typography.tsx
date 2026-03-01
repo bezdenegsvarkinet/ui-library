@@ -1,9 +1,9 @@
 'use client'
 
 import { FC } from 'react'
-import { cn } from '../../lib/utils'
+import { cn } from '@/lib/utils'
 import { cva, VariantProps } from 'class-variance-authority'
-import { typographySizes } from '../typography/typography-sizes'
+import { typographySizes } from '../config/typography-sizes'
 
 const typographyVariants = cva('transition-all duration-300 leading-[100%]', {
 	variants: {

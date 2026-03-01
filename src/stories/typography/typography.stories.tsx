@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { Typography } from './typography'
-import { type TTypographySizes, typographySizes } from './typography-sizes'
+import { Typography } from './ui/typography'
+import { typographySizes } from './config/typography-sizes'
+import { TTypographySizes } from 'src/stories/typography/types'
 
 const meta = {
 	title: 'UI/Typography',

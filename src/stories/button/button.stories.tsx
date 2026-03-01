@@ -1,7 +1,8 @@
-import { Button } from './button'
-import { buttonBgs } from './button-bgs'
-import { buttonSizes } from './button-sizes'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { Button } from './ui/button'
+import { buttonBgs } from './config/button-bgs'
+import { buttonSizes } from './config/button-sizes'
+import { TButtonBgs, TButtonSizes } from './types'
 
 const meta = {
 	title: 'UI/Button',
@@ -83,7 +84,7 @@ export const Variants: Story = {
 	render: args => (
 		<div className='flex flex-wrap gap-4'>
 			{Object.keys(buttonBgs).map(bg => (
-				<Button key={bg} {...args} bg={bg as keyof typeof buttonBgs}>
+				<Button key={bg} {...args} bg={bg as TButtonBgs}>
 					{bg}
 				</Button>
 			))}
@@ -105,7 +106,7 @@ export const Sizes: Story = {
 	render: args => (
 		<div className='flex flex-col gap-4 items-start'>
 			{Object.keys(buttonSizes).map(size => (
-				<Button key={size} {...args} size={size as keyof typeof buttonSizes}>
+				<Button key={size} {...args} size={size as TButtonSizes}>
 					Size {size}
 				</Button>
 			))}

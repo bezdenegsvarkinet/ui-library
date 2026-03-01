@@ -2,10 +2,9 @@
 
 import { FC } from 'react'
 import { cva, VariantProps } from 'class-variance-authority'
-import { cn } from '../../lib/utils'
-import { Typography } from '../typography/typography'
-import { buttonBgs } from './button-bgs'
-import { buttonSizes } from './button-sizes'
+import { cn } from '@/lib/utils'
+import { Typography } from '@/stories/typography'
+import { buttonBgs, buttonSizes } from '../config'
 
 const buttonVariants = cva('transition-all duration-300 py-2 px-4 rounded-[8px] leading-[100%]', {
 	variants: {
