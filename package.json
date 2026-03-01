@@ -1,7 +1,7 @@
 {
 	"name": "@bezdenegsvarkinet/ui-library",
 	"private": false,
-	"version": "0.3.6",
+	"version": "0.3.7",
 	"type": "module",
 	"files": [
 		"dist"
@@ -27,7 +27,9 @@
 	},
 	"scripts": {
 		"dev": "vite",
-		"build": "tsup",
+		"build:css": "tailwindcss -i src/index.css -o dist/index.css",
+		"build:js": "tsup",
+		"build": "pnpm build:js && pnpm build:css",
 		"lint": "eslint .",
 		"preview": "vite preview",
 		"storybook": "storybook dev -p 6006",
@@ -57,6 +59,7 @@
 		"@storybook/addon-docs": "^10.2.13",
 		"@storybook/addon-vitest": "^10.2.13",
 		"@storybook/react-vite": "^10.2.13",
+		"@tailwindcss/cli": "^4.2.1",
 		"@tailwindcss/vite": "^4.2.1",
 		"@types/node": "^24.10.1",
 		"@types/react": "^19.2.7",
