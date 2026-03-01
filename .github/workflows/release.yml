@@ -7,28 +7,35 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 
-# Имя запуска для красивого отображения в UI
-run-name: Release v${{ github.ref_name }} by @${{ github.actor }}
+# ✅ Правильное получение версии из package.json
+run-name: Release v${{ steps.get-version.outputs.version }} by @${{ github.actor }}
 
-# Отменяем предыдущие запуски, если начался новый (защита от гонок)
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   # ============================================
-  # ОБЩИЕ НАСТРОЙКИ (чтобы не дублировать код)
+  # ШАГ 1: Получение версии и настройка окружения
   # ============================================
   setup:
     runs-on: ubuntu-latest
     outputs:
-      # Передаем хэш коммита между джобами для кэширования
+      version: ${{ steps.get-version.outputs.version }}  # Передаём версию дальше
       commit_hash: ${{ steps.hash.outputs.hash }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
+
+      # ✅ Считываем версию из package.json
+      - name: Get package version
+        id: get-version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "📦 Publishing version: $VERSION"
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
@@ -44,23 +51,20 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # Вычисляем хэш для кэша (оптимизация)
       - name: Get commit hash
         id: hash
         run: echo "hash=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
 
   # ============================================
-  # ЗАДАЧА 1: Публикация в npm (только main)
+  # ЗАДАЧА 1: Публикация в npm
   # ============================================
   publish-npm:
-    name: 📦 Publish to NPM
+    name: 📦 Publish v${{ needs.setup.outputs.version }} to NPM
     needs: setup
     runs-on: ubuntu-latest
-    # Запускаем ТОЛЬКО если это пуш в main (не PR)
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
     steps:
-      # Используем артефакты или просто checkout, так как зависимости уже в кэше pnpm
       - name: Checkout code
         uses: actions/checkout@v5
 
@@ -71,7 +75,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 24.13.0
-          registry-url: 'https://registry.npmjs.org' # ⚠️ УБРАНЫ ПРОБЕЛЫ!
+          registry-url: 'https://registry.npmjs.org'
           cache: 'pnpm'
 
       - name: Install dependencies
@@ -80,25 +84,28 @@ jobs:
       - name: Build Library
         run: pnpm build
 
+      # ✅ Логируем версию перед публикацией
+      - name: Log version
+        run: echo "🚀 Publishing @bezdenegsvarkinet/ui-library@${{ needs.setup.outputs.version }}"
+
       - name: Publish to NPM
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   # ============================================
-  # ЗАДАЧА 2: Деплой в Chromatic (main + PR)
+  # ЗАДАЧА 2: Деплой в Chromatic
   # ============================================
   publish-chromatic:
-    name: 🎨 Deploy to Chromatic
+    name: 🎨 Deploy v${{ needs.setup.outputs.version }} to Chromatic
     needs: setup
     runs-on: ubuntu-latest
-    # Запускаем и на пушах, и на PR (для превью)
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
         with:
-          fetch-depth: 0 # Важно для Chromatic
+          fetch-depth: 0
 
       - name: Setup pnpm & Node
         uses: pnpm/action-setup@v2
@@ -117,5 +124,6 @@ jobs:
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           exitZeroOnChanges: true
-          # В PR покажем превью, в main — заапрувим автоматически (опционально)
           autoAcceptChanges: ${{ github.ref == 'refs/heads/main' }}
+          # ✅ Добавляем версию в название билда в Chromatic
+          storybookBuildDir: storybook-static
