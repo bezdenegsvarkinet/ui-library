@@ -1,5 +1,5 @@
 import { buttonSizes } from '@/stories/button/config/button-sizes'
-import { buttonBgs } from '@/stories/button/config/button-bgs'
+import { buttonVariants } from '@/stories/button/config/button-variants'
 
 export type TButtonSizes = keyof typeof buttonSizes
-export type TButtonBgs = keyof typeof buttonBgs
+export type TButtonBgs = keyof typeof buttonVariants

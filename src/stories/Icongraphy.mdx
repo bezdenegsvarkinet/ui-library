@@ -1,0 +1,17 @@
+import { IconGallery, IconItem, Meta } from '@storybook/addon-docs/blocks'
+import { icons } from 'lucide-react'
+import { Icon } from '@/stories/icon'
+
+<Meta title="Iconography" />
+
+# Iconography
+
+Explore our iconography library for a wide range of icons that can be used across your application.
+
+<IconGallery>
+	{Object.keys(icons).map(icon => (
+		<IconItem name={icon}>
+			<Icon icon={icon} />
+		</IconItem>
+	))}
+</IconGallery>

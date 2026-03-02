@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Button } from './ui/button'
-import { buttonBgs } from './config/button-bgs'
-import { buttonSizes } from './config/button-sizes'
-import { TButtonBgs, TButtonSizes } from './types'
+import { buttonSizes, buttonVariants } from './config/'
+import { TButtonSizes } from './types'
+import { icons } from 'lucide-react'
+import { typographySizes } from '@/stories/typography/config'
 
 const meta = {
 	title: 'UI/Button',
@@ -16,54 +17,89 @@ const meta = {
 Поддерживает несколько визуальных стилей и размеров.
 
 ### Особенности:
-- Варианты оформления: \`primary\`, \`secondary\`, \`outline\`
-- Размеры: \`32\`, \`40\`, \`48\`, \`56\` (высота в пикселях)
+- Варианты оформления: ${Object.keys(buttonVariants)
+					.map(v => `\`${v}\``)
+					.join(', ')}
+- Размеры: ${Object.keys(buttonSizes)
+					.map(v => `\`${v}\``)
+					.join(', ')} (высота в пикселях)
 - Поддержка состояния \`disabled\` через стандартный HTML атрибут
-- Опциональная обертка текста через \`asChild\`
+- Возможность отображения индикатора загрузки внутри кнопки
+- Оборачивает содержимое кнопки в \`Typography\` компонент
+- Опциональная иконка внутри кнопки
 				`,
 			},
 		},
 	},
 	argTypes: {
+		// CONTENT
 		children: {
 			control: 'text',
 			description: 'Содержимое кнопки',
 			table: { category: 'Content' },
 		},
-		bg: {
-			options: Object.keys(buttonBgs),
+		icon: {
+			options: Object.keys(icons),
 			control: { type: 'select' },
-			description: 'Вариант фона/стиля кнопки',
-			table: { category: 'Variants' },
+			description: 'Иконка',
+			table: { category: 'Content' },
+		},
+
+		// VARIANTS
+		variant: {
+			options: Object.keys(buttonVariants),
+			control: { type: 'select' },
+			description: 'Вариант оформления кнопки',
+			table: { category: 'Variants', defaultValue: { summary: 'primary-fill' } },
 		},
 		size: {
 			options: Object.keys(buttonSizes),
 			control: { type: 'select' },
 			description: 'Размер кнопки (высота в px)',
+			table: { category: 'Variants', defaultValue: { summary: '40' } },
+		},
+		textSize: {
+			options: Object.keys(typographySizes),
+			control: { type: 'select' },
+			description: 'Размер текста внутри кнопки',
+			table: { category: 'Variants', defaultValue: { summary: 'body/r/16' } },
+		},
+		iconSide: {
+			options: ['left', 'right'],
+			control: { type: 'select' },
+			description: 'Расположение иконки внутри кнопки',
 			table: { category: 'Variants' },
 		},
-		asChild: {
-			control: 'boolean',
-			description: 'Обернуть контент в Typography',
-			table: { category: 'Behavior' },
-		},
+
+		// STATE
 		disabled: {
-			control: 'boolean',
+			control: {
+				type: 'boolean',
+			},
 			description: 'Отключенное состояние',
+			table: { category: 'State' },
+		},
+		showLoader: {
+			control: {
+				type: 'boolean',
+			},
+			description: 'Отображение индикатора загрузки.',
 			table: { category: 'State' },
 		},
 		className: {
 			control: 'text',
 			description: 'Дополнительные CSS классы',
-			table: { disable: true },
+			type: { name: 'string', required: false },
+			table: { disable: false, category: 'Layout' },
 		},
 	},
 	args: {
 		children: 'Button',
-		bg: 'primary',
+		variant: 'primary-fill',
 		size: '40',
-		asChild: false,
 		disabled: false,
+		showLoader: false,
+		iconSide: 'left',
 	},
 	tags: ['autodocs'],
 } satisfies Meta<typeof Button>
@@ -78,14 +114,14 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {}
 
 /**
- * Все доступные варианты оформления (bg).
+ * Все доступные варианты оформления (variant).
  */
 export const Variants: Story = {
 	render: args => (
 		<div className='flex flex-wrap gap-4'>
-			{Object.keys(buttonBgs).map(bg => (
-				<Button key={bg} {...args} bg={bg as TButtonBgs}>
-					{bg}
+			{Object.keys(buttonVariants).map(variant => (
+				<Button key={variant} {...args} variant={variant as keyof typeof buttonVariants}>
+					{variant}
 				</Button>
 			))}
 		</div>
@@ -93,7 +129,7 @@ export const Variants: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Демонстрация всех стилей кнопки: primary, secondary, outline.',
+				story: 'Демонстрация всех стилей кнопки: primary-fill, primary-outline, secondary-fill, secondary-outline.',
 			},
 		},
 	},
@@ -143,36 +179,12 @@ export const Disabled: Story = {
  */
 export const WithIcon: Story = {
 	args: {
-		children: (
-			<div className='flex items-center gap-2'>
-				<svg width='20' height='20' viewBox='0 0 20 20' fill='currentColor'>
-					<path d='M10 2a8 8 0 100 16 8 8 0 000-16zm1 11H9v-2h2v2zm0-4H9V5h2v4z' />
-				</svg>
-				<span>С иконкой</span>
-			</div>
-		),
+		icon: 'LogIn',
 	},
 	parameters: {
 		docs: {
 			description: {
 				story: 'Пример использования кнопки с иконкой внутри.',
-			},
-		},
-	},
-}
-
-/**
- * Кнопка с опцией asChild.
- */
-export const AsChild: Story = {
-	args: {
-		asChild: true,
-		children: 'Typography Wrapped',
-	},
-	parameters: {
-		docs: {
-			description: {
-				story: 'Контент обернут в компонент Typography для единообразия.',
 			},
 		},
 	},
