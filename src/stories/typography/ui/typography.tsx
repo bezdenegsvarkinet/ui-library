@@ -12,7 +12,7 @@ const typographyVariants = cva('transition-all duration-300 leading-[100%]', {
 		},
 	},
 	defaultVariants: {
-		size: 'button/m/16',
+		size: 'body/r/16',
 	},
 })
 

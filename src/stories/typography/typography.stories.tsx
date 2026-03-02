@@ -22,14 +22,14 @@ const meta = {
 		tag: {
 			options: ['p', 'span'],
 			control: { type: 'select' },
-			description: 'HTML тег обертки',
+			description: 'HTML тег обертки (По умолчанию p).',
 			table: { category: 'Layout' },
 		},
 		size: {
 			// Динамически получаем доступные варианты из конфига
 			options: Object.keys(typographySizes),
 			control: { type: 'select' },
-			description: 'Вариант размера текста',
+			description: 'Вариант размера текста (По умолчанию body/r/16).',
 			table: { category: 'Variants' },
 		},
 		className: {
