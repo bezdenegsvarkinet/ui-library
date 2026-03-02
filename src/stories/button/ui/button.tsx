@@ -9,7 +9,7 @@ import { icons, Loader2 } from 'lucide-react'
 import { TTypographySizes } from '@/stories/typography/types'
 
 const buttonConfig = cva(
-	'transition-all cursor-pointer duration-300 py-2 px-4 rounded-[8px] flex items-center gap-2 disabled:cursor-not-allowed',
+	'transition-all cursor-pointer duration-300 py-2 px-4 rounded-[8px] flex items-center gap-2 disabled:cursor-not-allowed ',
 	{
 		variants: {
 			variant: {

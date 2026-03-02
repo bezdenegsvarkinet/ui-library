@@ -63,6 +63,7 @@ const meta = {
 			control: { type: 'select' },
 			description: 'Размер текста внутри кнопки',
 			table: { category: 'Variants', defaultValue: { summary: 'body/r/16' } },
+			defaultValue: { summary: 'body/r/16' },
 		},
 		iconSide: {
 			options: ['left', 'right'],
@@ -77,14 +78,14 @@ const meta = {
 				type: 'boolean',
 			},
 			description: 'Отключенное состояние',
-			table: { category: 'State' },
+			table: { category: 'State', defaultValue: { summary: 'false' } },
 		},
 		showLoader: {
 			control: {
 				type: 'boolean',
 			},
 			description: 'Отображение индикатора загрузки.',
-			table: { category: 'State' },
+			table: { category: 'State', defaultValue: { summary: 'false' } },
 		},
 		className: {
 			control: 'text',
@@ -100,6 +101,7 @@ const meta = {
 		disabled: false,
 		showLoader: false,
 		iconSide: 'left',
+		textSize: 'body/r/16',
 	},
 	tags: ['autodocs'],
 } satisfies Meta<typeof Button>

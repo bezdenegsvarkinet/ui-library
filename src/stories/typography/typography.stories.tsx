@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Typography } from './ui/typography'
 import { typographySizes } from './config/typography-sizes'
-import { TTypographySizes } from 'src/stories/typography/types'
+import { TTypographySizes } from '@/stories/typography/types'
 
 const meta = {
 	title: 'UI/Typography',
@@ -26,16 +26,16 @@ const meta = {
 			table: { category: 'Layout' },
 		},
 		size: {
-			// Динамически получаем доступные варианты из конфига
 			options: Object.keys(typographySizes),
 			control: { type: 'select' },
 			description: 'Вариант размера текста (По умолчанию body/r/16).',
-			table: { category: 'Variants' },
+			table: { category: 'Variants', defaultValue: { summary: 'body/r/16' } },
 		},
 		className: {
 			control: 'text',
 			description: 'Дополнительные CSS классы',
-			table: { disable: true }, // Скрываем из основной таблицы, если не критично
+			table: { disable: false, category: 'Layout' },
+			type: { name: 'string', required: false },
 		},
 	},
 	parameters: {
